@@ -121,7 +121,17 @@ class ResNet(nn.Module):
 		out = self.layer4(out)
 		out = self.avgpool(out)
 		out = torch.flatten(out, 1)
-		return out 
+		return out
+
+	def freeze_layers(self):
+
+		self.conv1.requires_grad_(False)
+		self.bn1.requires_grad_(False)
+		self.layer1.requires_grad_(False)
+		self.layer2.requires_grad_(False)
+		self.layer3.requires_grad_(False)
+		self.layer4.requires_grad_(False)
+
 
 		
 

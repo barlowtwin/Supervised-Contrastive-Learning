@@ -32,13 +32,15 @@ class SupConProjection(nn.Module):
 
 class Classifier(nn.Module):
 
-	def __init__(self, feat_dim,  num_classes):
+	def __init__(self, model, proj_dim,  num_classes):
 		super(Classifier, self).__init__()
 
-		self.linear = nn.Linear(feat_dim, num_classes)
+		self.model = model # batch_size x 200
+		self.linear = nn.Linear(proj_dim, num_classes) # 200 x num_classes
 
-	def forward(self, features):
-		return self.linear(features) # 1 x num_classes
+	def forward(self, input): # input :  batch of images
+		features = self.model(input) 
+		return self.linear(features) # batch_size x num_classes
 
 
 
