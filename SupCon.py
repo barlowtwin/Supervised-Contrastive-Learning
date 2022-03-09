@@ -57,7 +57,7 @@ class Criterion(nn.Module):
 		# projections : 2*batch_size x 128 ; 2 stands for features from 2 images (real and augmented)
 		# labels : 2*batch_size
 
-		dot_product = torch.mm(projections, projections.T) / self.temperature # 20 x 20
+		dot_product = torch.mm(projections, projections.T) / self.temperature # batch_size x batch_size
 		exp_dot_product = torch.exp(dot_product - torch.max(dot_product, dim = 1)[0]) + 1e-5 # 1e-5 added to avoid log0 # 20 x 20
 
 		mask_similar_classes = (labels.unsqueeze(1).repeat(1, labels.shape[0]) == labels).to(self.device) # batch_size x batch_size boolean tensor
